@@ -1,0 +1,81 @@
+service: restapi
+
+frameworkVersion: ">=1.1.0 <2.0.0"
+
+plugins:
+  - serverless-offline
+
+custom:
+  stages:
+    - local
+    - develop
+    - staging
+    - qa
+    - production
+
+provider:
+  name: aws
+  runtime: nodejs10.x
+  stage: ${opt:stage, 'local'}
+  environment: ${file(env/${self:provider.stage}.yml)}
+
+functions:
+  createaccount:
+    handler: functions/account/create.create
+    events:
+      - http:
+          path: account
+          method: post
+          cors: true
+
+  login:
+    handler: functions/account/login.login
+    events:
+      - http:
+          path: account/login
+          method: post
+          cors: true
+
+  authorizeuser:
+    handler: functions/account/verifytoken.verifytoken
+
+  create:
+    handler: functions/restaurant/create.create
+    events:
+      - http:
+          path: restaurant
+          method: post
+          cors: true
+
+  list:
+    handler: functions/restaurant/list.list
+    events:
+      - http:
+          path: restaurant
+          method: get
+          cors: true
+          authorizer: authorizeuser
+
+  get:
+    handler: functions/restaurant/get.get
+    events:
+      - http:
+          path: restaurant/{id}
+          method: get
+          cors: true
+
+  update:
+    handler: todos/update.update
+    events:
+      - http:
+          path: todos/{id}
+          method: put
+          cors: true
+
+  delete:
+    handler: todos/delete.delete
+    events:
+      - http:
+          path: todos/{id}
+          method: delete
+          cors: true

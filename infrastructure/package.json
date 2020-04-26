@@ -1,0 +1,17 @@
+{
+  "name": "infrastructure",
+  "version": "1.0.0",
+  "description": "",
+  "main": "migrate.js",
+  "scripts": {
+    "migrate": "node ./migrate migrate",
+    "rollback": "node ./migrate rollback"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^4.0.1",
+    "mysql-migrations": "^1.0.6",
+    "sql-migrations": "^1.0.6"
+  }
+}

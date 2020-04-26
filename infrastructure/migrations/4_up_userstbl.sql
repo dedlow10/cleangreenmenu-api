@@ -1,0 +1,11 @@
+CREATE TABLE Users (
+    Id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    EmailAddress VARCHAR(255),
+    FirstName VARCHAR(255),
+    LastName VARCHAR(255),
+    RoleId INT NOT NULL,
+    PasswordHash VARCHAR(255),
+    PasswordSalt VARCHAR(255),
+    FOREIGN KEY (RoleId) REFERENCES Roles(Id) ON DELETE CASCADE
+);
+
