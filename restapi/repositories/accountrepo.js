@@ -37,7 +37,7 @@ class AccountRepo {
 
     static async getRoleById(id) {
         const conn = await db.getConnection();
-        var sql = "SELECT TOP 1 r.Name FROM Users u JOIN Roles r ON r.Id = u.RoleId WHERE u.Id = ?";
+        var sql = "SELECT r.Name FROM Users u JOIN Roles r ON r.Id = u.RoleId WHERE u.Id = ? LIMIT 1";
         let [rows] = await conn.execute(sql, [id]);
         if (rows.length > 0) {
             return rows[0].Name;
