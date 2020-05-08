@@ -25,7 +25,6 @@ jobs:
         cd restapi
         npm install
         npm i -g serverless@1.54.0
-        npm-recursive-install
     - name: Deploy serverless - Auth
       run: |
         cd restapi
