@@ -10,5 +10,5 @@ module.exports.list = async (event, context, callback) => {
       statusCode: 200,
       body: JSON.stringify(results),
     };
-    callback(null, response);
+    return response;
 };

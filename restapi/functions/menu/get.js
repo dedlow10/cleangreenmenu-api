@@ -1,10 +1,10 @@
 'use strict';
 
-const RestaurantRepo = require('../../repositories/restaurantrepo');
+const MenuRepo = require('../../repositories/menurepo');
 
 module.exports.get = async (event, context, callback) => {
     // create a response
-    let result = await RestaurantRepo.getById(event.pathParameters.id);
+    let result = await MenuRepo.getByRestaurant(event.pathParameters.id);
     console.log(result);
     const response = {
       statusCode: 200,

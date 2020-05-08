@@ -1,0 +1,6 @@
+REGION: us-east-1
+DATABASE_USER:  ${ssm:/CleanGreenMenu/DatabaseUser}
+DATABASE_HOST:  ${ssm:/CleanGreenMenu/DatabaseHost}
+DATABASE_PASS:  ${ssm:/CleanGreenMenu/DatabasePassword~true}
+DATABASE_NAME:  ${ssm:/CleanGreenMenu/DatabaseName}
+JWT_SECRET:  ${ssm:/CleanGreenMenu/JWTSecret~true}

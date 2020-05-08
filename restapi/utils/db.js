@@ -2,12 +2,15 @@ var mysql = require('mysql2/promise');
 
 module.exports = {
     getConnection: function() {
-        return mysql.createConnection({
+        return mysql.createPool({
             host: process.env.DATABASE_HOST,
             user: process.env.DATABASE_USER,
             password: process.env.DATABASE_PASS,
             database: process.env.DATABASE_NAME,
             multipleStatements: true,
+            waitForConnections: true,
+            connectionLimit: 10,
+            queueLimit: 0,
             typeCast: function castField( field, useDefaultTypeCasting ) {
                 // We only want to cast bit fields that have a single-bit in them. If the field
                 // has more than one bit, then we cannot assume it is supposed to be a Boolean.

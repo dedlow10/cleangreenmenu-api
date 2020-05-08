@@ -1,4 +1,4 @@
-service: restapi
+service: cleangreenmenu-restapi
 
 frameworkVersion: ">=1.1.0 <2.0.0"
 
@@ -8,7 +8,7 @@ plugins:
 custom:
   stages:
     - local
-    - develop
+    - development
     - staging
     - qa
     - production
@@ -18,6 +18,12 @@ provider:
   runtime: nodejs10.x
   stage: ${opt:stage, 'local'}
   environment: ${file(env/${self:provider.stage}.yml)}
+  vpc:
+    securityGroupIds:
+      - sg-0594f0e78619424b3
+    subnetIds:
+      - subnet-c89e10e6
+      - subnet-e54b0eea
 
 functions:
   createaccount:
@@ -39,24 +45,24 @@ functions:
   authorizeuser:
     handler: functions/account/verifytoken.verifytoken
 
-  create:
+  createrestaurant:
     handler: functions/restaurant/create.create
     events:
       - http:
           path: restaurant
           method: post
           cors: true
+          authorizer: authorizeuser
 
-  list:
+  listrestaurant:
     handler: functions/restaurant/list.list
     events:
       - http:
           path: restaurant
           method: get
           cors: true
-          authorizer: authorizeuser
 
-  get:
+  getrestuarant:
     handler: functions/restaurant/get.get
     events:
       - http:
@@ -64,18 +70,37 @@ functions:
           method: get
           cors: true
 
-  update:
-    handler: todos/update.update
+  deleterestaurant:
+    handler: functions/restaurant/delete.delete
     events:
       - http:
-          path: todos/{id}
-          method: put
-          cors: true
-
-  delete:
-    handler: todos/delete.delete
-    events:
-      - http:
-          path: todos/{id}
+          path: restaurant/{id}
           method: delete
           cors: true
+          authorizer: authorizeuser
+
+  createmenu:
+    handler: functions/menu/create.create
+    events:
+      - http:
+          path: restaurant/{id}/menu
+          method: post
+          cors: true
+          authorizer: authorizeuser
+
+  getmenu:
+    handler: functions/menu/get.get
+    events:
+      - http:
+          path: restaurant/{id}/menu
+          method: get
+          cors: true
+
+  deletemenu:
+    handler: functions/menu/delete.delete
+    events:
+      - http:
+          path: restaurant/{id}/menu/{menuid}
+          method: delete
+          cors: true
+          authorizer: authorizeuser

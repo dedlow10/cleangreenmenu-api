@@ -2,9 +2,10 @@
 
 const jwt = require('jsonwebtoken');
 
-const generatePolicy = (principalId, effect, resource) => {
+const generatePolicy = (principalId, effect, resource, userData) => {
   const authResponse = {};
   authResponse.principalId = principalId;
+  authResponse.context = userData;
   if (effect && resource) {
     const policyDocument = {};
     policyDocument.Version = '2012-10-17';
@@ -24,7 +25,7 @@ module.exports.verifytoken = async (event, context, callback) => {
   var decoded = jwt.verify(token, process.env.JWT_SECRET);
 
   if (decoded != null) {
-    callback(null, generatePolicy(decoded.Id, 'Allow', event.methodArn))
+    callback(null, generatePolicy(decoded.Id, 'Allow', event.methodArn, decoded))
   }
   else {
     callback(null, 'Unauthorized');

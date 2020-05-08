@@ -3,5 +3,6 @@ CREATE TABLE Menu (
     Name VARCHAR(255),
     RestaurantId INT NOT NULL,
     MenuData json,
+    CreatedOn DATETIME,
     FOREIGN KEY (RestaurantId) REFERENCES Restaurant(Id) ON DELETE CASCADE
 );

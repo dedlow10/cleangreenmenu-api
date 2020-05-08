@@ -35,6 +35,17 @@ class AccountRepo {
         return null;
     }
 
+    static async getRoleById(id) {
+        const conn = await db.getConnection();
+        var sql = "SELECT TOP 1 r.Name FROM Users u JOIN Roles r ON r.Id = u.RoleId WHERE u.Id = ?";
+        let [rows] = await conn.execute(sql, [id]);
+        if (rows.length > 0) {
+            return rows[0].Name;
+            
+        }
+        return null;
+    }
+
     static async validateUserPassword(email, password) {
         const conn = await db.getConnection();
         var sql = "SELECT PasswordHash, PasswordSalt FROM Users WHERE EmailAddress = ?";

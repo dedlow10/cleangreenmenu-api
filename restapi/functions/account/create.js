@@ -17,12 +17,12 @@ module.exports.create = async (event, context, callback) => {
         statusCode: 200,
         body: JSON.stringify({NewUserId: userId} ),
       };
-      callback(null, response);
+      return response;
   }
   else {
     const response = {
         statusCode: 404,
       };
-      callback(null, response);
+      return response;
   } 
 };
