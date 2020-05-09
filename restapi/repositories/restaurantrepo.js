@@ -38,6 +38,13 @@ class RestaurantRepo {
         let [rows] = await conn.execute(sql);
         return rows;
     }
+
+    static async findByName(name) {
+        const conn = await db.getConnection();
+        var sql = "SELECT * FROM Restaurant WHERE Name like ? ORDER BY Name LIMIT 10";
+        let [rows] = await conn.execute(sql, [ name + "%" ]);
+        return rows;
+    }
 }
 
 module.exports = RestaurantRepo

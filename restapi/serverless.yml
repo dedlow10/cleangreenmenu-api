@@ -61,6 +61,14 @@ functions:
           path: restaurant
           method: get
           cors: true
+          
+  findbynamerestaurant:
+    handler: functions/restaurant/findbyname.findbyname
+    events:
+      - http:
+          path: restaurant/search
+          method: get
+          cors: true
 
   getrestuarant:
     handler: functions/restaurant/get.get
